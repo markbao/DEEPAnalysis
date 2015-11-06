@@ -111,7 +111,8 @@ deepRiskHB <- function()
       choices=read.csv(filename, header=FALSE)
     }
 
-    all_questions_paths=read.csv('all_questions_paths_risk.csv', header=FALSE)
+    all_questions_paths <- DEEP::all_questions_paths_risk
+#     all_questions_paths=read.csv('all_questions_paths_risk.csv', header=FALSE)
 
 
     ngambles=length(adaptive_questions)
