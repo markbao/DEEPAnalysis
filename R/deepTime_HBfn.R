@@ -3,6 +3,16 @@
 ## Hierarchical Bayes Time Fns ##
 #################################
 
+#' @title
+#' Estimation of Time Preference Parameters Using Hierarchical Markov Chain Mote Carlo Bayesian Framework
+#'
+#' @description
+#' \code{deepTimeHB} Estimates Risk Preferences and outputs results in current working directory.
+#'
+#'
+#' @return Outputs multiple files with Time Preference Parameters.
+#' @export
+
 deepTimeHB <- function()
 {
 

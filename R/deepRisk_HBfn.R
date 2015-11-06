@@ -1,7 +1,16 @@
-
 #################################
 ## Hierarchical Bayes Risk Fns ##
 #################################
+
+#' @title
+#' Estimation of Risk Preference Parameters Using Hierarchical Markov Chain Mote Carlo Bayesian Framework
+#'
+#' @description
+#' \code{deepRiskHB} Estimates Risk Preferences and outputs results in current working directory.
+#'
+#'
+#' @return Outputs multiple files with Risk Preference Parameters.
+#' @export
 
 deepRiskHB <- function()
 {

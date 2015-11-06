@@ -6,14 +6,14 @@
 #' Reads file extension and helps Identify whether file is XML or CSV.
 #'
 #' @description
-#' \code{strEndsWith} searches for a substring ("needle") within a larger string ("haystack").
+#' \code{strEndsWith} searches for a substring ("needle") at the end of a larger string ("haystack").
 #' It returns a boolean TRUE/FALSE if it finds the substring within the string.
 #' Note: if the substring contains more characters than the string, it defaults to FALSE.
 #'
 #' @param haystack string input, used for the file_path
 #' @param needle string input, used for the file extension.
 #'
-#' @return boolean TRUE or FALSE to indicate if the file extension (the "needle") was found in the filepath (the "haystack").
+#' @return boolean TRUE or FALSE to indicate if the file extension (the "needle") matches the filepath (the "haystack").
 #' @export
 #' @examples \dontrun{
 #' strEndsWith(haystack = "myQualtricsOutput.csv", needle = "csv")

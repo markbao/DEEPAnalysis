@@ -35,6 +35,27 @@ library(MCMCpack)
 ## DEEP Start - Transform & HB ##
 #################################
 
+#' @title
+#' Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.
+#'
+#' @description
+#' \code{deepRun} Takes in a filepath for the Qualtrics/Limesurvey output
+#' along with a working directory and the DEEP type specification. If no working
+#' directory is provided, it defaults to the current directory. If no file_path is provided
+#' it will request that one ge given using the GUI.
+#'
+#' @param DEEPtype character string that specifies whether output is DEEP "risk" or "time".
+#' @param WD allows the user to specify a working directory. Uses the current directory if no directory is specified.
+#' @param file_path contains the file path to the Limesurvey/Qualtrics output.
+#'
+#' @export
+#' @examples \dontrun{
+#' deepRun(DEEPtype = "risk", file_path = "/MyDocuments/myQualtricsOutput.csv")
+#' deepRun(DEEPtype = "risk", WD = "/MyCurrentProject/DEEP")
+#' deepRun(DEEPtype = "risk", WD = "/MyCurrentProject/DEEP", file_path = "/MyDocuments/myQualtricsOutput.csv")
+#' }
+#'
+
 deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL)
 {
   if(is.null(file_path)){file_path <- file.choose()}
