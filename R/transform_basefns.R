@@ -2,7 +2,24 @@
 #### Base Transform Functions ####
 ##################################
 
-# Helps Identify whether file is XML or CSV
+#' @title
+#' Reads file extension and helps Identify whether file is XML or CSV.
+#'
+#' @description
+#' \code{strEndsWith} searches for a substring ("needle") within a larger string ("haystack").
+#' It returns a boolean TRUE/FALSE if it finds the substring within the string.
+#' Note: if the substring contains more characters than the string, it defaults to FALSE.
+#'
+#' @param haystack string input, used for the file_path
+#' @param needle string input, used for the file extension.
+#'
+#' @return boolean TRUE or FALSE to indicate if the file extension (the "needle") was found in the filepath (the "haystack").
+#' @export
+#' @examples \dontrun{
+#' strEndsWith(haystack = "myQualtricsOutput.csv", needle = "csv")
+#' }
+#'
+
 strEndsWith <- function(haystack, needle)
 {
   hl <- nchar(haystack)
@@ -17,7 +34,24 @@ strEndsWith <- function(haystack, needle)
 }
 
 
-# Splits Participant Data into Hierarchical Bayes inputs
+#' @title
+#' Splits Participant Data into Hierarchical Bayes inputs
+#'
+#' @description
+#' \code{deepSplit} subsets the "transformed" Limesurvey or Qualtrics DEEP output, after it has been loaded
+#' to a dataframe, and exports four CSV files into the current working directory that will be read by the Hierarchical Bayes.
+#' Note: Correct specification of the DEEP type is required for proper naming of files.
+#'
+#' @param raw_data dataframe containing DEEP risk/time output
+#' @param DEEPtype character string that specifies whether output is DEEP "risk" or "time".
+#'
+#' @return Writes four CSV files named according to what DEEP type was specified.
+#' @export
+#' @examples \dontrun{
+#' deepSplit(rawdata = = df, DEEPtype = "risk")
+#' }
+#'
+
 deepSplit <- function(raw_data, DEEPtype)
 {
   # Rename first column (Qualtrics IDs) and clean useless columns or NAs
@@ -53,6 +87,24 @@ deepSplit <- function(raw_data, DEEPtype)
 
 }
 
+#' @title
+#' Transforms JSON DEEP output into a readable dataframe
+#'
+#' @description
+#' \code{deepTransform} Reads the filetype of the Qualtrics/Limesurvey output and parses
+#' the JSON into a dataframe. Depending on the DEEP type, it sends it to the function \code{deepSplit}
+#' to create the inputs for the Hierarchical Bayes.
+#'
+#' @param DEEPtype character string that specifies whether output is DEEP "risk" or "time".
+#' @param WD allows the user to specify a working directory. Uses the current directory if no directory is specified.
+#' @param file_path contains the file path to the Limesurvey/Qualtrics output.
+#'
+#' @return a dataframe containing the parsed JSON with the Participant responses
+#' @export
+#' @examples \dontrun{
+#' deepTransform(DEEPtype = "risk", file_path = "/Documents/output.xml")
+#' }
+#'
 
 # Takes Raw Participant Data from JSON format and adapts it. Feeds it to deepSplit.
 deepTransform <- function(DEEPtype, WD = getwd(), file_path)
