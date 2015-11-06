@@ -12,10 +12,10 @@ strEndsWith(haystack, needle)
 \item{needle}{string input, used for the file extension.}
 }
 \value{
-boolean TRUE or FALSE to indicate if the file extension (the "needle") was found in the filepath (the "haystack").
+boolean TRUE or FALSE to indicate if the file extension (the "needle") matches the filepath (the "haystack").
 }
 \description{
-\code{strEndsWith} searches for a substring ("needle") within a larger string ("haystack").
+\code{strEndsWith} searches for a substring ("needle") at the end of a larger string ("haystack").
 It returns a boolean TRUE/FALSE if it finds the substring within the string.
 Note: if the substring contains more characters than the string, it defaults to FALSE.
 }
