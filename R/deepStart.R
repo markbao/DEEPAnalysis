@@ -59,7 +59,7 @@ library(MCMCpack)
 deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL)
 {
   if(is.null(file_path)){file_path <- file.choose()}
-
+  file_path <- gsub("\\", "/", file_path, fixed = T)
   deepTransform(DEEPtype = DEEPtype, WD = WD, file_path = file_path)
 
   if(tolower(DEEPtype) == "time"){deepTimeHB()}
