@@ -8,10 +8,12 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyData: FALSE
-Imports:
+Imports: 
     dplyr,
     XML,
     jsonlite,
     MSBVAR,
-    MCMCpack
-RoxygenNote: 5.0.0
+    MCMCpack,
+    httr
+RoxygenNote: 5.0.1
+Suggests: testthat

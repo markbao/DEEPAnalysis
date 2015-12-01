@@ -11,18 +11,21 @@
 #     - Serials_respid: contains the Qualtrics ID that matches the serial.
 # - The Hierarchical Bayes code which takes in the four CSVs and runs the HB
 # - A deepRun function that runs both of these functions, taking in survey data,
-#   runs the heirarchical Bayes, and returning the data all in one.
+#   running the hierarchical Bayes, and returning the data all in one.
 #
 # Version 2.0 - Luis Sanchez & Mark Bao (10/19/15)
 # Hierarchical Bayes code translated into R by Seoungwoo Lee
 #-------------------
 
-# .onAttach <-
-#   function(libname, pkgname) {
-#     packageStartupMessage("\nPlease cite as: \n")
-#     packageStartupMessage(" Hlavac, Marek (2015). stargazer: Well-Formatted Regression and Summary Statistics Tables.")
-#     packageStartupMessage(" R package version 5.2. http://CRAN.R-project.org/package=stargazer \n")
-#   }
+.onAttach <-
+  function(libname, pkgname) {
+    packageStartupMessage("\n\n\nThis program has been licensed free of charge. Please note that DEEP may only be used for academic purposes.")
+    packageStartupMessage("When you report results of experiments conducted with DEEP, the licence requires that you mention it's use.")
+    packageStartupMessage("For the purposes of publication, please cite as: ")
+
+    packageStartupMessage("\n Toubia, O., Johnson, E., Evgeniou, T., & Delquie, P. (2013) 'Dynamic experiments for estimating preferences:")
+    packageStartupMessage("  An adaptive method of eliciting time and risk parameters.' Management Science, 59(3), 613-640.")
+  }
 
 devtools::use_package("dplyr")
 devtools::use_package("XML")
@@ -68,12 +71,17 @@ library(httr)
 deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL)
 {
   if(is.null(file_path)){file_path <- file.choose()}
+
+  message("\nDepending on the number of participants, this process may take a while. It may take a few minutes before the parameter estimation begins.")
+
+  message("\nOnce the estimation is complete, you can find the output in ", WD)
+  Sys.sleep(10)
+
   deepTransform(DEEPtype = DEEPtype, WD = WD, file_path = file_path)
 
   if(tolower(DEEPtype) == "time"){deepTimeHB()}
   if(tolower(DEEPtype) == "risk"){deepRiskHB()}
 
-  licenseAgreement <- "This program has been licensed free of charge. Please note that DEEP may only be used for academic purposes. When you report results of experiments conducted with DEEP, the licence requires that you mention it's use in the publication and use the following citation:"
-  citation <- "'Toubia, O., Johnson, E., Evgeniou, T., & Delquié, P. (2013). Dynamic experiments for estimating preferences: An adaptive method of eliciting time and risk parameters. Management Science, 59(3), 613-640.'"
-  message(licenseAgreement,"\n\n", citation)
+  message("\nRemember that DEEP may only be used for academic purposes. \nIf you use DEEP please include the following citation at the time of publication:
+          \n Toubia, O., Johnson, E., Evgeniou, T., & Delquié, P. (2013). Dynamic experiments for estimating preferences: \n An adaptive method of eliciting time and risk parameters. Management Science, 59(3), 613-640.")
 }
