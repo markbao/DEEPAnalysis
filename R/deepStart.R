@@ -39,13 +39,15 @@ library(MCMCpack)
 #' Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.
 #'
 #' @description
-#' \code{deepRun} Takes in a filepath for the Qualtrics/Limesurvey output
+#' \code{deepRun} Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.
+#' Takes in a filepath for the Qualtrics/Limesurvey output
 #' along with a working directory and the DEEP type specification. If no working
 #' directory is provided, it defaults to the current directory. If no file_path is provided
-#' it will request that one ge given using the GUI.
+#' it will request that one be given using the GUI.
 #'
 #' @param DEEPtype character string that specifies whether output is DEEP "risk" or "time".
-#' @param WD allows the user to specify a working directory. Uses the current directory if no directory is specified.
+#' @param WD allows the user to specify a working directory. Uses the current directory if no
+#' directory is specified.
 #' @param file_path contains the file path to the Limesurvey/Qualtrics output.
 #'
 #' @export
@@ -64,4 +66,7 @@ deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL)
   if(tolower(DEEPtype) == "time"){deepTimeHB()}
   if(tolower(DEEPtype) == "risk"){deepRiskHB()}
 
+  licenseAgreement <- "This program has been licensed free of charge. Please note that DEEP may only be used for academic purposes. When you report results of experiments conducted with DEEP, the licence requires that you mention it's use in the publication and use the following citation:"
+  citation <- "'Toubia, O., Johnson, E., Evgeniou, T., & Delquié, P. (2013). Dynamic experiments for estimating preferences: An adaptive method of eliciting time and risk parameters. Management Science, 59(3), 613-640.'"
+  message(licenseAgreement,"\n\n", citation)
 }

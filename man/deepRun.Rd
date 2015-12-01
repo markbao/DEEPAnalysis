@@ -9,15 +9,17 @@ deepRun(DEEPtype, WD = getwd(), file_path = NULL)
 \arguments{
 \item{DEEPtype}{character string that specifies whether output is DEEP "risk" or "time".}
 
-\item{WD}{allows the user to specify a working directory. Uses the current directory if no directory is specified.}
+\item{WD}{allows the user to specify a working directory. Uses the current directory if no
+directory is specified.}
 
 \item{file_path}{contains the file path to the Limesurvey/Qualtrics output.}
 }
 \description{
-\code{deepRun} Takes in a filepath for the Qualtrics/Limesurvey output
+\code{deepRun} Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.
+Takes in a filepath for the Qualtrics/Limesurvey output
 along with a working directory and the DEEP type specification. If no working
 directory is provided, it defaults to the current directory. If no file_path is provided
-it will request that one ge given using the GUI.
+it will request that one be given using the GUI.
 }
 \examples{
 \dontrun{
