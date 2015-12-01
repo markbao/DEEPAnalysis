@@ -17,19 +17,26 @@
 # Hierarchical Bayes code translated into R by Seoungwoo Lee
 #-------------------
 
+# .onAttach <-
+#   function(libname, pkgname) {
+#     packageStartupMessage("\nPlease cite as: \n")
+#     packageStartupMessage(" Hlavac, Marek (2015). stargazer: Well-Formatted Regression and Summary Statistics Tables.")
+#     packageStartupMessage(" R package version 5.2. http://CRAN.R-project.org/package=stargazer \n")
+#   }
+
 devtools::use_package("dplyr")
 devtools::use_package("XML")
 devtools::use_package("jsonlite")
 devtools::use_package("MSBVAR")
 devtools::use_package("MCMCpack")
+devtools::use_package("httr")
 
 library(dplyr)
 library(XML)
 library(jsonlite)
-
 library(MSBVAR)
 library(MCMCpack)
-
+library(httr)
 
 #################################
 ## DEEP Start - Transform & HB ##

@@ -143,7 +143,7 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path)
     json <- sapply(json, function(x) x[1])
 
     # Parse the JSON
-    partJSON <- fromJSON(json)
+    partJSON <- jsonlite::fromJSON(json)
 
     # Remove first row ('step 0')
     partJSON <- partJSON[-1,]
