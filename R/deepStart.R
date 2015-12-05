@@ -28,7 +28,7 @@
   }
 
 # .onLoad <- function(libname, pkgname) {
-#   data("all_questions_paths_risk", package=pkgname, envir=parent.env(environment()))
+#   data("all_questions_paths_risk", "all_questions_paths_time" package=pkgname, envir=parent.env(environment()))
 # }
 
 devtools::use_package("dplyr", type = "depends")
