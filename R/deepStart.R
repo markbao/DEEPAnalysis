@@ -27,6 +27,10 @@
     packageStartupMessage("  An adaptive method of eliciting time and risk parameters.' Management Science, 59(3), 613-640.")
   }
 
+.onLoad <- function(libname, pkgname) {
+  data("all_questions_paths_risk", package=pkgname, envir=parent.env(environment()))
+}
+
 devtools::use_package("dplyr", type = "depends")
 devtools::use_package("XML", type = "depends")
 devtools::use_package("jsonlite", type = "depends")
@@ -34,12 +38,6 @@ devtools::use_package("MSBVAR", type = "depends")
 devtools::use_package("MCMCpack", type = "depends")
 devtools::use_package("httr", type = "depends")
 
-require("dplyr")
-require("XML")
-require("jsonlite")
-require("MSBVAR")
-require("MCMCpack")
-require("httr")
 
 #################################
 ## DEEP Start - Transform & HB ##
@@ -62,6 +60,8 @@ require("httr")
 #' @param filter_by specifies the name/identifier of the question you want to isolate for analysis. This parameter is used to analyze a dataset that contains multiple DEEP outputs but is optional when analyzing a single DEEP output.
 #'
 #' @export
+#' @useDynLib DEEP
+#'
 #' @examples \dontrun{
 #' deepRun(DEEPtype = "risk", file_path = "/MyDocuments/myQualtricsOutput.csv")
 #' deepRun(DEEPtype = "risk", WD = "/MyCurrentProject/DEEP")

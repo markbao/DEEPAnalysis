@@ -14,14 +14,11 @@
 #' @param needle string input, used for the file extension.
 #'
 #' @return boolean TRUE or FALSE to indicate if the file extension (the "needle") matches the filepath (the "haystack").
-#' @export
+#'
 #' @examples \dontrun{
 #' strEndsWith(haystack = "myQualtricsOutput.csv", needle = "csv")
 #' }
 #'
-
-
-
 
 strEndsWith <- function(haystack, needle)
 {
@@ -35,6 +32,9 @@ strEndsWith <- function(haystack, needle)
     return(substr(haystack, hl-nl+1, hl) == needle)
   }
 }
+
+
+
 
 
 #' @title
@@ -128,7 +128,7 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
 
   if (strEndsWith(file_path, "xml")) {
     # Load XML
-    survey_data <- xmlToDataFrame(file_path, stringsAsFactors = FALSE)
+    survey_data <- XML::xmlToDataFrame(file_path, stringsAsFactors = FALSE)
   } else if (strEndsWith(file_path, "csv")) {
     # Load CSV
     survey_data <- read.csv(file_path, header = TRUE, stringsAsFactors = FALSE)

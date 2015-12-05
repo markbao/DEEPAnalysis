@@ -9,6 +9,8 @@
 #' @description
 #' \code{deepRiskHB} Estimates Risk Preferences and outputs results in current working directory.
 #'
+#' @import MSBVAR
+#' @import MCMCpack
 #'
 #' @return Outputs multiple files with Risk Preference Parameters.
 #' @export
