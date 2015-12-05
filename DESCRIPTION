@@ -12,7 +12,7 @@ Description: DEEP is an dynamic estimation technique for Time Preference and
 License: TBD - MAy only be used for Academic Purposes ONLY. License requires
     you to cite the paper by Toubia, O., Johnson, E., Evgeniou, T., & Delquie, P.
     (2012).
-LazyData: FALSE
+LazyData: TRUE
 RoxygenNote: 5.0.1
 Depends: dplyr,
     XML,
