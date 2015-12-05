@@ -27,19 +27,19 @@
     packageStartupMessage("  An adaptive method of eliciting time and risk parameters.' Management Science, 59(3), 613-640.")
   }
 
-devtools::use_package("dplyr")
-devtools::use_package("XML")
-devtools::use_package("jsonlite")
-devtools::use_package("MSBVAR")
-devtools::use_package("MCMCpack")
-devtools::use_package("httr")
+devtools::use_package("dplyr", type = "depends")
+devtools::use_package("XML", type = "depends")
+devtools::use_package("jsonlite", type = "depends")
+devtools::use_package("MSBVAR", type = "depends")
+devtools::use_package("MCMCpack", type = "depends")
+devtools::use_package("httr", type = "depends")
 
-library(dplyr)
-library(XML)
-library(jsonlite)
-library(MSBVAR)
-library(MCMCpack)
-library(httr)
+require("dplyr")
+require("XML")
+require("jsonlite")
+require("MSBVAR")
+require("MCMCpack")
+require("httr")
 
 #################################
 ## DEEP Start - Transform & HB ##

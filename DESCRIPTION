@@ -1,19 +1,22 @@
 Package: DEEP
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1
-Date: 2015-11-05
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Dynamic Experiments for Estimating Preferences (DEEP)
+Version: 1.0
+Date: 2015-12-05
+Author: Seoungwoo L., Dan W., Luis S., Mark B.
+Maintainer: Luis S. <luis@decisionsciences.columbia.edu>, Mark B.
+    <mark@decisionsciences.columbia.edu>
+Description: DEEP is an dynamic estimation technique for Time Preference and
+    Risk Preference parameters. This package allows you to analyze the DEEP Time &
+    DEEP Risk output and obtain finalized parameters.
+License: TBD - MAy only be used for Academic Purposes ONLY. License requires
+    you to cite the paper by Toubia, O., Johnson, E., Evgeniou, T., & Delquie, P.
+    (2012).
 LazyData: FALSE
-Imports: 
-    dplyr,
+RoxygenNote: 5.0.1
+Depends: dplyr,
     XML,
     jsonlite,
     MSBVAR,
     MCMCpack,
     httr
-RoxygenNote: 5.0.1
-Suggests: testthat
