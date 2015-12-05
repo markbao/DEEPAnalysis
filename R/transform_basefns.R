@@ -39,7 +39,7 @@ strEndsWith <- function(haystack, needle)
 #'
 #' @description
 #' \code{deepSplit} subsets the "transformed" Limesurvey or Qualtrics DEEP output, after it has been loaded
-#' to a dataframe, and exports four CSV files into the current working directory that will be read by the Hierarchical Bayes.
+#' to a dataframe, and exports four CSV files into the current working directory that will be read by the Hierarchical Bayes. In addition, it creates a CSV containing the time (in seconds) that each participant spent on each question.
 #' Note: Correct specification of the DEEP type is required for proper naming of files.
 #'
 #' @param raw_data dataframe containing DEEP risk/time output
@@ -84,6 +84,11 @@ deepSplit <- function(raw_data, DEEPtype)
   choices <- clean_data %>% dplyr::select(matches("Answer"))
   choices[, 1:(ncol(choices)-1)] %>%
     write.table(paste("choices_",DEEPtype,"_1.csv",sep=""), row.names=FALSE, col.names=FALSE, sep=',')
+
+  # write the Timing
+  timing <- clean_data %>% dplyr::select(serial, matches("Timing"))
+  timing[, 1:(ncol(timing)-1)] %>%
+    write.table(paste("Qtiming_DEEP",DEEPtype,".csv",sep=""), row.names=FALSE, col.names=TRUE, sep=',')
 
 }
 
@@ -184,6 +189,20 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path)
       # Store the answer in the corresponding row/column
       if (!(is.na(stepRow$answer))) {
         survey_data_converted[rowIterator, answerColumnName] <- stepRow$answer
+      }
+
+      # Generate the name for the Timing column, which is Q[step]Timing
+      timeColumnName <- paste("Q",stepIterator,"Timing", sep="")
+
+      # Check if the Timing column for this step exists; if not, create it
+      if (!(timeColumnName %in% colnames(survey_data_converted)))
+      {
+        survey_data_converted[timeColumnName] <- 0
+      }
+
+      # Store the time in the corresponding row/column
+      if (!(is.na(stepRow$responseTime))) {
+        survey_data_converted[rowIterator, timeColumnName] <- stepRow$responseTime
       }
     }
   }

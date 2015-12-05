@@ -68,7 +68,7 @@ library(httr)
 #' }
 #'
 
-deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL)
+deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL, filter_by = NULL)
 {
   if(is.null(file_path)){file_path <- file.choose()}
 

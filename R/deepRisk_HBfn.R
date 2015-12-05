@@ -1,3 +1,4 @@
+
 #################################
 ## Hierarchical Bayes Risk Fns ##
 #################################
@@ -11,6 +12,8 @@
 #'
 #' @return Outputs multiple files with Risk Preference Parameters.
 #' @export
+
+#******* Originally called Risk_Unbounded_070113.R *********#
 
 deepRiskHB <- function()
 {

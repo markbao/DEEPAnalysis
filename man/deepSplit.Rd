@@ -16,7 +16,7 @@ Writes four CSV files named according to what DEEP type was specified.
 }
 \description{
 \code{deepSplit} subsets the "transformed" Limesurvey or Qualtrics DEEP output, after it has been loaded
-to a dataframe, and exports four CSV files into the current working directory that will be read by the Hierarchical Bayes.
+to a dataframe, and exports four CSV files into the current working directory that will be read by the Hierarchical Bayes. In addition, it creates a CSV containing the time (in seconds) that each participant spent on each question.
 Note: Correct specification of the DEEP type is required for proper naming of files.
 }
 \examples{
