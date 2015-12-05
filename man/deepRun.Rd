@@ -4,7 +4,7 @@
 \alias{deepRun}
 \title{Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.}
 \usage{
-deepRun(DEEPtype, WD = getwd(), file_path = NULL)
+deepRun(DEEPtype, WD = getwd(), file_path = NULL, filter_by = NULL)
 }
 \arguments{
 \item{DEEPtype}{character string that specifies whether output is DEEP "risk" or "time".}
@@ -13,19 +13,22 @@ deepRun(DEEPtype, WD = getwd(), file_path = NULL)
 directory is specified.}
 
 \item{file_path}{contains the file path to the Limesurvey/Qualtrics output.}
+
+\item{filter_by}{specifies the name/identifier of the question you want to isolate for analysis. This parameter is used to analyze a dataset that contains multiple DEEP outputs but is optional when analyzing a single DEEP output.}
 }
 \description{
 \code{deepRun} Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.
 Takes in a filepath for the Qualtrics/Limesurvey output
 along with a working directory and the DEEP type specification. If no working
 directory is provided, it defaults to the current directory. If no file_path is provided
-it will request that one be given using the GUI.
+it will request that one be given using the GUI. If your survey contains multiple DEEP outputs, e.g. two DEEP Risk surveys or a DEEP Risk and a DEEP Time survey, you must specify the name/identifier of the question used in Qualtrics/LimeSurvey.Otherwise an error will be produced (Note: If you have a single DEEP survey, you may still specify the question identifier in this parameter).
 }
 \examples{
 \dontrun{
 deepRun(DEEPtype = "risk", file_path = "/MyDocuments/myQualtricsOutput.csv")
 deepRun(DEEPtype = "risk", WD = "/MyCurrentProject/DEEP")
 deepRun(DEEPtype = "risk", WD = "/MyCurrentProject/DEEP", file_path = "/MyDocuments/myQualtricsOutput.csv")
+deepRun(DEEPtype = "time", WD = "/MyCurrentProject/DEEP", file_path = "/MyDocuments/TimeSurveyOutput.csv", filter_by = "myDEEPtimeQuestion")
 }
 
 }
