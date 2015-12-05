@@ -60,7 +60,6 @@ devtools::use_package("httr", type = "depends")
 #' @param filter_by specifies the name/identifier of the question you want to isolate for analysis. This parameter is used to analyze a dataset that contains multiple DEEP outputs but is optional when analyzing a single DEEP output.
 #'
 #' @export
-#' @useDynLib DEEP
 #'
 #' @examples \dontrun{
 #' deepRun(DEEPtype = "risk", file_path = "/MyDocuments/myQualtricsOutput.csv")
