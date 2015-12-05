@@ -27,9 +27,9 @@
     packageStartupMessage("  An adaptive method of eliciting time and risk parameters.' Management Science, 59(3), 613-640.")
   }
 
-.onLoad <- function(libname, pkgname) {
-  data("all_questions_paths_risk", package=pkgname, envir=parent.env(environment()))
-}
+# .onLoad <- function(libname, pkgname) {
+#   data("all_questions_paths_risk", package=pkgname, envir=parent.env(environment()))
+# }
 
 devtools::use_package("dplyr", type = "depends")
 devtools::use_package("XML", type = "depends")
