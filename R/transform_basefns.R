@@ -133,8 +133,10 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
     # Load CSV
     survey_data <- read.csv(file_path, header = TRUE, stringsAsFactors = FALSE)
 
-    # Delete first row
+    # Change Headers, Eliminate duplicate Columns & Delete first row
+    colnames(survey_data) = survey_data[1, ]
     survey_data <- survey_data[-1,]
+    survey_data <- survey_data[ , !duplicated(colnames(survey_data))]
   } else {
     stop("Invalid file. File must be an XML or CSV.")
   }
@@ -144,7 +146,15 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
   # For each row, we need to set Q[i]ID and Q[i]Answer
   survey_data_converted <- survey_data
 
-  if(!is.null(filter_by)){survey_data_converted <- dplyr::select(survey_data_converted, ResponseID, matches(filter_by))}
+  if(!is.null(filter_by))
+  {
+    survey_data_converted <- dplyr::select(survey_data_converted, ResponseID, matches(filter_by))
+
+    #Handle NA
+    survey_data_converted[survey_data_converted==""]  <- NA
+    survey_data_converted <- na.omit(survey_data_converted)
+  }
+
 
   for (rowIterator in 1:nrow(survey_data_converted))
   {
@@ -215,9 +225,24 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
       }
     }
   }
-
+  # if(collaborate){deepContribute(file_path)}
   if(tolower(DEEPtype) == "time"){deepSplit(survey_data_converted, tolower(DEEPtype))}
   if(tolower(DEEPtype) == "risk"){deepSplit(survey_data_converted, tolower(DEEPtype))}
 }
+
+
+# # Contributes to DEEP Parameter Estimation Repository
+# deepContribute <- function(file_path)
+# {
+#
+#   ftpUpload(what = file_path,
+#             to = "ftpServerAddress:PortNumber/location/of/directory/NameOfFile.extension",
+#             verbose = TRUE,
+#             userpwd = "username:password")
+#   #use listCurlOptions() to see what other Curl options are available.
+#
+#   #Alternatives include using HTTR
+#   #POST("http://sampledomain.com/api/data/?key=xxx", body = list(y = upload_file(system.file("my_data.zip"))))
+# }
 
 

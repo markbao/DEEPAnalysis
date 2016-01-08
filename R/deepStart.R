@@ -20,7 +20,7 @@
 .onAttach <-
   function(libname, pkgname) {
     packageStartupMessage("\n\n\nThis program has been licensed free of charge. Please note that DEEP may only be used for academic purposes.")
-    packageStartupMessage("When you report results of experiments conducted with DEEP, the licence requires that you mention it's use.")
+    packageStartupMessage("When you report results of experiments conducted with DEEP, the licence requires that you mention its use.")
     packageStartupMessage("For the purposes of publication, please cite as: ")
 
     packageStartupMessage("\n Toubia, O., Johnson, E., Evgeniou, T., & Delquie, P. (2013) 'Dynamic experiments for estimating preferences:")
@@ -36,7 +36,7 @@ devtools::use_package("XML", type = "depends")
 devtools::use_package("jsonlite", type = "depends")
 devtools::use_package("MSBVAR", type = "depends")
 devtools::use_package("MCMCpack", type = "depends")
-devtools::use_package("httr", type = "depends")
+# devtools::use_package("RCurl", type = "depends")
 
 
 #################################

@@ -6,3 +6,4 @@ DEEP.Rproj
 #ignores original files
 original/
 Testing/
+inst/doc

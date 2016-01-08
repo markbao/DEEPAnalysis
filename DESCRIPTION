@@ -19,4 +19,8 @@ Depends: dplyr,
     jsonlite,
     MSBVAR,
     MCMCpack,
-    httr
+    httr,
+    RCurl
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
