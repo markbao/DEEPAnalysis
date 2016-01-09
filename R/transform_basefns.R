@@ -111,6 +111,7 @@ deepSplit <- function(raw_data, DEEPtype)
 #' @param filter_by specifies the name/identifier of the question you want to isolate for analysis. This parameter is used to analyze a dataset that contains multiple DEEP outputs but is optional when analyzing a single DEEP output.
 #'
 #' @return a dataframe containing the parsed JSON with the Participant responses
+#' @return a CSV is exported with the unshrunken parameter estimates
 #' @export
 #' @examples \dontrun{
 #' deepTransform(DEEPtype = "risk", file_path = "/Documents/output.xml")
@@ -175,6 +176,75 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
     # Renumber rows
     row.names(partJSON) <- 1:nrow(partJSON)
 
+
+    ###### Retrieve Unshrunken estimates #######
+
+    if(tolower(DEEPtype) == "time")
+    {
+      betaColName <- "Unshrunken_Beta"
+      # Check if the Beta column exists; if not, create it.
+      if (!(betaColName %in% colnames(survey_data_converted)))
+      {
+        survey_data_converted[betaColName] <- 0
+        survey_data_converted[rowIterator, betaColName] <- partJSON$beta[nrow(partJSON)]
+      }
+      else
+      {
+        survey_data_converted[rowIterator, betaColName] <- partJSON$beta[nrow(partJSON)]
+      }
+
+      drColName <- "Unshrunken_DiscountRate"
+      # Check if the Discount rate column exists; if not, create it.
+      if (!(drColName %in% colnames(survey_data_converted)))
+      {
+        survey_data_converted[drColName] <- 0
+        survey_data_converted[rowIterator, drColName] <- partJSON$discountRate[nrow(partJSON)]
+      }
+      else
+      {
+        survey_data_converted[rowIterator, drColName] <- partJSON$discountRate[nrow(partJSON)]
+      }
+    }
+
+    if(tolower(DEEPtype) == "risk")
+    {
+      alphaColName <- "Unshrunken_Alpha"
+      # Check if the Alpha column exists; if not, create it.
+      if (!(alphaColName %in% colnames(survey_data_converted)))
+      {
+        survey_data_converted[alphaColName] <- 0
+        survey_data_converted[rowIterator, alphaColName] <- partJSON$alpha[nrow(partJSON)]
+      }
+      else
+      {
+        survey_data_converted[rowIterator, alphaColName] <- partJSON$alpha[nrow(partJSON)]
+      }
+
+      sigmaColName <- "Unshrunken_Sigma"
+      # Check if the Sigma column exists; if not, create it.
+      if (!(sigmaColName %in% colnames(survey_data_converted)))
+      {
+        survey_data_converted[sigmaColName] <- 0
+        survey_data_converted[rowIterator, sigmaColName] <- partJSON$sigma[nrow(partJSON)]
+      }
+      else
+      {
+        survey_data_converted[rowIterator, sigmaColName] <- partJSON$sigma[nrow(partJSON)]
+      }
+
+      lambdaColName <- "Unshrunken_Lambda"
+      # Check if the Beta column exists; if not, create it.
+      if (!(lambdaColName %in% colnames(survey_data_converted)))
+      {
+        survey_data_converted[lambdaColName] <- 0
+        survey_data_converted[rowIterator, lambdaColName] <- partJSON$lambda[nrow(partJSON)]
+      }
+      else
+      {
+        survey_data_converted[rowIterator, lambdaColName] <- partJSON$lambda[nrow(partJSON)]
+      }
+    }
+
     # Iterate through each row (each step) in partJSON
     for (stepIterator in 1:nrow(partJSON))
     {
@@ -225,6 +295,10 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
       }
     }
   }
+
+  unshrunkenEstimates <- dplyr::select(survey_data_converted, matches("Response"), matches("Unshrunken"))
+  write.csv(unshrunkenEstimates, "Unshrunken_Parameter_Estimates.csv", row.names = F)
+
   # if(collaborate){deepContribute(file_path)}
   if(tolower(DEEPtype) == "time"){deepSplit(survey_data_converted, tolower(DEEPtype))}
   if(tolower(DEEPtype) == "risk"){deepSplit(survey_data_converted, tolower(DEEPtype))}

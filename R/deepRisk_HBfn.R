@@ -173,7 +173,7 @@ deepRiskHB <- function()
       write.csv(gambles2, filename, row.names = FALSE)
 
       #change the value of the first argurment of hbvalue042710 to be the question that you want to estimate after
-      hbvalue042710(12,ngambles,spec,study_ID)
+      hbvalue042710(ngambles,ngambles,spec,study_ID)
     }
 
   }

@@ -17,6 +17,8 @@ deepTransform(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
 }
 \value{
 a dataframe containing the parsed JSON with the Participant responses
+
+a CSV is exported with the unshrunken parameter estimates
 }
 \description{
 \code{deepTransform} Reads the filetype of the Qualtrics/Limesurvey output and parses

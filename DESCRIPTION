@@ -9,7 +9,7 @@ Maintainer: Luis S. <luis@decisionsciences.columbia.edu>, Mark B.
 Description: DEEP is an dynamic estimation technique for Time Preference and
     Risk Preference parameters. This package allows you to analyze the DEEP Time &
     DEEP Risk output and obtain finalized parameters.
-License: TBD - MAy only be used for Academic Purposes ONLY. License requires
+License: TBD - May be used for Academic Purposes ONLY. License requires
     you to cite the paper by Toubia, O., Johnson, E., Evgeniou, T., & Delquie, P.
     (2012).
 LazyData: TRUE

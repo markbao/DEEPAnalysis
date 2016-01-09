@@ -36,7 +36,7 @@ devtools::use_package("XML", type = "depends")
 devtools::use_package("jsonlite", type = "depends")
 devtools::use_package("MSBVAR", type = "depends")
 devtools::use_package("MCMCpack", type = "depends")
-# devtools::use_package("RCurl", type = "depends")
+devtools::use_package("RCurl", type = "depends")
 
 
 #################################
