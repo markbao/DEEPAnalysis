@@ -4,7 +4,8 @@
 \alias{deepRun}
 \title{Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.}
 \usage{
-deepRun(DEEPtype, WD = getwd(), file_path = NULL, filter_by = NULL)
+deepRun(DEEPtype, WD = getwd(), file_path = NULL, filter_by = NULL,
+  collaborate = TRUE)
 }
 \arguments{
 \item{DEEPtype}{character string that specifies whether output is DEEP "risk" or "time".}
@@ -15,6 +16,8 @@ directory is specified.}
 \item{file_path}{contains the file path to the Limesurvey/Qualtrics output.}
 
 \item{filter_by}{specifies the name/identifier of the question you want to isolate for analysis. This parameter is used to analyze a dataset that contains multiple DEEP outputs but is optional when analyzing a single DEEP output.}
+
+\item{collaborate}{allows you to specify if you want to contribute anonymously to the DEEP database. Defaulted to TRUE.}
 }
 \description{
 \code{deepRun} Runs the DEEP Transformation, DEEP Split and Hierarchical Bayes algorithm.

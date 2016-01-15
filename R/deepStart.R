@@ -58,6 +58,7 @@ devtools::use_package("RCurl", type = "depends")
 #' directory is specified.
 #' @param file_path contains the file path to the Limesurvey/Qualtrics output.
 #' @param filter_by specifies the name/identifier of the question you want to isolate for analysis. This parameter is used to analyze a dataset that contains multiple DEEP outputs but is optional when analyzing a single DEEP output.
+#' @param collaborate allows you to specify if you want to contribute anonymously to the DEEP database. Defaulted to TRUE.
 #'
 #' @export
 #'
@@ -69,7 +70,7 @@ devtools::use_package("RCurl", type = "depends")
 #' }
 #'
 
-deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL, filter_by = NULL)
+deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL, filter_by = NULL, collaborate = TRUE)
 {
   if(is.null(file_path)){file_path <- file.choose()}
 
@@ -78,7 +79,7 @@ deepRun <- function(DEEPtype, WD = getwd(), file_path = NULL, filter_by = NULL)
   message("\nOnce the estimation is complete, you can find the output in ", WD)
   Sys.sleep(10)
 
-  deepTransform(DEEPtype = DEEPtype, WD = WD, file_path = file_path, filter_by)
+  deepTransform(DEEPtype = DEEPtype, WD = WD, file_path = file_path, filter_by, collaborate)
 
   if(tolower(DEEPtype) == "time"){deepTimeHB()}
   if(tolower(DEEPtype) == "risk"){deepRiskHB()}

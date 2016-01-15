@@ -120,7 +120,7 @@ deepSplit <- function(raw_data, DEEPtype)
 #'
 
 # Takes Raw Participant Data from JSON format and adapts it. Feeds it to deepSplit.
-deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
+deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL, collaborate)
 {
   setwd(WD) #sets working directory
 
@@ -299,24 +299,26 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL)
   unshrunkenEstimates <- dplyr::select(survey_data_converted, matches("Response"), matches("Unshrunken"))
   write.csv(unshrunkenEstimates, "Unshrunken_Parameter_Estimates.csv", row.names = F)
 
-  # if(collaborate){deepContribute(file_path)}
+  if(collaborate){deepContribute(file_path)}
   if(tolower(DEEPtype) == "time"){deepSplit(survey_data_converted, tolower(DEEPtype))}
   if(tolower(DEEPtype) == "risk"){deepSplit(survey_data_converted, tolower(DEEPtype))}
 }
 
 
-# # Contributes to DEEP Parameter Estimation Repository
-# deepContribute <- function(file_path)
-# {
-#
-#   ftpUpload(what = file_path,
-#             to = "ftpServerAddress:PortNumber/location/of/directory/NameOfFile.extension",
-#             verbose = TRUE,
-#             userpwd = "username:password")
-#   #use listCurlOptions() to see what other Curl options are available.
-#
-#   #Alternatives include using HTTR
-#   #POST("http://sampledomain.com/api/data/?key=xxx", body = list(y = upload_file(system.file("my_data.zip"))))
-# }
+# Contributes to DEEP Parameter Estimation Repository
+deepContribute <- function(file_path)
+{
+  timeStamp <- Sys.time()
+  timeStamp <- gsub(":", ".", timeStamp)
+  timeStamp <- gsub(" ", "_", timeStamp)
+  #create file name for server upload
+  fileName <- strsplit(file_path,"/")
+  fileName <- fileName[[1]][length(fileName[[1]])]
+  fileName <- paste(timeStamp, fileName, sep="__")
+
+  location <- paste("sftp://deepstore.decisionsciences.columbia.edu:22",dropFolder, fileName, sep="/")
+
+  ftpUpload(what = file_path, to = location, verbose = FALSE, userpwd = "deepstore:7dcb9y7X9io4ruPseR834K66u")
+}
 
 
