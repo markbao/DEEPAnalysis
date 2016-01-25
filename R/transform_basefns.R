@@ -311,6 +311,7 @@ deepContribute <- function(file_path)
   timeStamp <- Sys.time()
   timeStamp <- gsub(":", ".", timeStamp)
   timeStamp <- gsub(" ", "_", timeStamp)
+  dropFolder <- "var/cds/deepstore"
   #create file name for server upload
   fileName <- strsplit(file_path,"/")
   fileName <- fileName[[1]][length(fileName[[1]])]
