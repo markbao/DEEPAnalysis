@@ -165,135 +165,141 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL, c
     # Find the row with the DEEP JSON in it using grep
     # TODO: figure out what happens when multiple rows have JSON
     json <- row[which(apply(row, 2, function(x) any(grep("\\[\\{\\},\\{", x))))]
-    json <- sapply(json, function(x) x[1])
-
-    # Parse the JSON
-    partJSON <- jsonlite::fromJSON(json)
-
-    # Remove first row ('step 0')
-    partJSON <- partJSON[-1,]
-
-    # Renumber rows
-    row.names(partJSON) <- 1:nrow(partJSON)
-
-
-    ###### Retrieve Unshrunken estimates #######
-
-    if(tolower(DEEPtype) == "time")
+    if(length(json)!=0)
     {
-      betaColName <- "Unshrunken_Beta"
-      # Check if the Beta column exists; if not, create it.
-      if (!(betaColName %in% colnames(survey_data_converted)))
+      json <- sapply(json, function(x) x[1])
+      
+      # Parse the JSON
+      partJSON <- jsonlite::fromJSON(json)
+      
+      # Remove first row ('step 0')
+      partJSON <- partJSON[-1,]
+      
+      # Renumber rows
+      row.names(partJSON) <- 1:nrow(partJSON)
+      
+      
+      ###### Retrieve Unshrunken estimates #######
+      
+      if(tolower(DEEPtype) == "time")
       {
-        survey_data_converted[betaColName] <- 0
-        survey_data_converted[rowIterator, betaColName] <- partJSON$beta[nrow(partJSON)]
+        betaColName <- "Unshrunken_Beta"
+        # Check if the Beta column exists; if not, create it.
+        if (!(betaColName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[betaColName] <- 0
+          survey_data_converted[rowIterator, betaColName] <- partJSON$beta[nrow(partJSON)]
+        }
+        else
+        {
+          survey_data_converted[rowIterator, betaColName] <- partJSON$beta[nrow(partJSON)]
+        }
+        
+        drColName <- "Unshrunken_DiscountRate"
+        # Check if the Discount rate column exists; if not, create it.
+        if (!(drColName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[drColName] <- 0
+          survey_data_converted[rowIterator, drColName] <- partJSON$discountRate[nrow(partJSON)]
+        }
+        else
+        {
+          survey_data_converted[rowIterator, drColName] <- partJSON$discountRate[nrow(partJSON)]
+        }
       }
-      else
+      
+      if(tolower(DEEPtype) == "risk")
       {
-        survey_data_converted[rowIterator, betaColName] <- partJSON$beta[nrow(partJSON)]
+        alphaColName <- "Unshrunken_Alpha"
+        # Check if the Alpha column exists; if not, create it.
+        if (!(alphaColName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[alphaColName] <- 0
+          survey_data_converted[rowIterator, alphaColName] <- partJSON$alpha[nrow(partJSON)]
+        }
+        else
+        {
+          survey_data_converted[rowIterator, alphaColName] <- partJSON$alpha[nrow(partJSON)]
+        }
+        
+        sigmaColName <- "Unshrunken_Sigma"
+        # Check if the Sigma column exists; if not, create it.
+        if (!(sigmaColName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[sigmaColName] <- 0
+          survey_data_converted[rowIterator, sigmaColName] <- partJSON$sigma[nrow(partJSON)]
+        }
+        else
+        {
+          survey_data_converted[rowIterator, sigmaColName] <- partJSON$sigma[nrow(partJSON)]
+        }
+        
+        lambdaColName <- "Unshrunken_Lambda"
+        # Check if the Beta column exists; if not, create it.
+        if (!(lambdaColName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[lambdaColName] <- 0
+          survey_data_converted[rowIterator, lambdaColName] <- partJSON$lambda[nrow(partJSON)]
+        }
+        else
+        {
+          survey_data_converted[rowIterator, lambdaColName] <- partJSON$lambda[nrow(partJSON)]
+        }
       }
-
-      drColName <- "Unshrunken_DiscountRate"
-      # Check if the Discount rate column exists; if not, create it.
-      if (!(drColName %in% colnames(survey_data_converted)))
+      
+      # Iterate through each row (each step) in partJSON
+      for (stepIterator in 1:nrow(partJSON))
       {
-        survey_data_converted[drColName] <- 0
-        survey_data_converted[rowIterator, drColName] <- partJSON$discountRate[nrow(partJSON)]
+        stepRow <- partJSON[stepIterator,]
+        
+        # Generate the name for the ID column, which is Q[step]ID
+        idColumnName <- paste("Q",stepIterator,"ID", sep="")
+        
+        # Check if the ID column for this step exists; if not, create it
+        if (!(idColumnName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[idColumnName] <- 0
+        }
+        
+        # Store the ID in the [rowID, "Q[step]ID"]
+        # So for the ID in row 2, question 5, it should store it in [2, "Q5ID"]
+        if (!(is.na(stepRow$id)))
+        {
+          survey_data_converted[rowIterator, idColumnName] <- stepRow$id
+        }
+        
+        # Generate the name for the Answer column, which is Q[step]Answer
+        answerColumnName <- paste("Q",stepIterator,"Answer", sep="")
+        
+        # Check if the Answer column for this step exists; if not, create it
+        if (!(answerColumnName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[answerColumnName] <- 0
+        }
+        
+        # Store the answer in the corresponding row/column
+        if (!(is.na(stepRow$answer))) {
+          survey_data_converted[rowIterator, answerColumnName] <- stepRow$answer
+        }
+        
+        # Generate the name for the Timing column, which is Q[step]Timing
+        timeColumnName <- paste("Q",stepIterator,"Timing", sep="")
+        
+        # Check if the Timing column for this step exists; if not, create it
+        if (!(timeColumnName %in% colnames(survey_data_converted)))
+        {
+          survey_data_converted[timeColumnName] <- 0
+        }
+        
+        # Store the time in the corresponding row/column
+        if (!(is.na(stepRow$responseTime))) {
+          survey_data_converted[rowIterator, timeColumnName] <- stepRow$responseTime
+        }
       }
-      else
-      {
-        survey_data_converted[rowIterator, drColName] <- partJSON$discountRate[nrow(partJSON)]
-      }
+      
     }
-
-    if(tolower(DEEPtype) == "risk")
-    {
-      alphaColName <- "Unshrunken_Alpha"
-      # Check if the Alpha column exists; if not, create it.
-      if (!(alphaColName %in% colnames(survey_data_converted)))
-      {
-        survey_data_converted[alphaColName] <- 0
-        survey_data_converted[rowIterator, alphaColName] <- partJSON$alpha[nrow(partJSON)]
-      }
-      else
-      {
-        survey_data_converted[rowIterator, alphaColName] <- partJSON$alpha[nrow(partJSON)]
-      }
-
-      sigmaColName <- "Unshrunken_Sigma"
-      # Check if the Sigma column exists; if not, create it.
-      if (!(sigmaColName %in% colnames(survey_data_converted)))
-      {
-        survey_data_converted[sigmaColName] <- 0
-        survey_data_converted[rowIterator, sigmaColName] <- partJSON$sigma[nrow(partJSON)]
-      }
-      else
-      {
-        survey_data_converted[rowIterator, sigmaColName] <- partJSON$sigma[nrow(partJSON)]
-      }
-
-      lambdaColName <- "Unshrunken_Lambda"
-      # Check if the Beta column exists; if not, create it.
-      if (!(lambdaColName %in% colnames(survey_data_converted)))
-      {
-        survey_data_converted[lambdaColName] <- 0
-        survey_data_converted[rowIterator, lambdaColName] <- partJSON$lambda[nrow(partJSON)]
-      }
-      else
-      {
-        survey_data_converted[rowIterator, lambdaColName] <- partJSON$lambda[nrow(partJSON)]
-      }
-    }
-
-    # Iterate through each row (each step) in partJSON
-    for (stepIterator in 1:nrow(partJSON))
-    {
-      stepRow <- partJSON[stepIterator,]
-
-      # Generate the name for the ID column, which is Q[step]ID
-      idColumnName <- paste("Q",stepIterator,"ID", sep="")
-
-      # Check if the ID column for this step exists; if not, create it
-      if (!(idColumnName %in% colnames(survey_data_converted)))
-      {
-        survey_data_converted[idColumnName] <- 0
-      }
-
-      # Store the ID in the [rowID, "Q[step]ID"]
-      # So for the ID in row 2, question 5, it should store it in [2, "Q5ID"]
-      if (!(is.na(stepRow$id)))
-      {
-        survey_data_converted[rowIterator, idColumnName] <- stepRow$id
-      }
-
-      # Generate the name for the Answer column, which is Q[step]Answer
-      answerColumnName <- paste("Q",stepIterator,"Answer", sep="")
-
-      # Check if the Answer column for this step exists; if not, create it
-      if (!(answerColumnName %in% colnames(survey_data_converted)))
-      {
-        survey_data_converted[answerColumnName] <- 0
-      }
-
-      # Store the answer in the corresponding row/column
-      if (!(is.na(stepRow$answer))) {
-        survey_data_converted[rowIterator, answerColumnName] <- stepRow$answer
-      }
-
-      # Generate the name for the Timing column, which is Q[step]Timing
-      timeColumnName <- paste("Q",stepIterator,"Timing", sep="")
-
-      # Check if the Timing column for this step exists; if not, create it
-      if (!(timeColumnName %in% colnames(survey_data_converted)))
-      {
-        survey_data_converted[timeColumnName] <- 0
-      }
-
-      # Store the time in the corresponding row/column
-      if (!(is.na(stepRow$responseTime))) {
-        survey_data_converted[rowIterator, timeColumnName] <- stepRow$responseTime
-      }
-    }
+    else{survey_data_converted[rowIterator,] <- NA}
+    
   }
 
   unshrunkenEstimates <- dplyr::select(survey_data_converted, matches("Response"), matches("Unshrunken"))
