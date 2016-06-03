@@ -170,7 +170,7 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL, c
       json <- sapply(json, function(x) x[1])
       
       # Parse the JSON
-      partJSON <- jsonlite::fromJSON(json)
+      partJSON <- jsonlite::stream_in(file(json))
       
       # Remove first row ('step 0')
       partJSON <- partJSON[-1,]
