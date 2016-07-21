@@ -149,6 +149,7 @@ deepTransform <- function(DEEPtype, WD = getwd(), file_path, filter_by = NULL, c
 
   if(!is.null(filter_by))
   {
+    print survey_data_converted
     survey_data_converted <- dplyr::select(survey_data_converted, ResponseID, matches(filter_by))
 
     #Handle NA
